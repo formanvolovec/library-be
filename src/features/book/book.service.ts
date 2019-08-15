@@ -10,7 +10,7 @@ export class BookService {
     getBook(_id: string): IBook {
          library.find(book => book._id ===_id);
          return;
-        // return Book.findOne({ author: 'Meleshko'}).exec();
+        // return Book.findOne({ author: 'Bykov'}).exec();
     }
     getBooks(){
         return library;
