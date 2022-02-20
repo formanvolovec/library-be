@@ -1,13 +1,12 @@
 # compiled output
-dist
-node_modules
+/dist
+/node_modules
 docker-compose.yml
-./src/shared/config/index.ts
+/src/shared/config/index.ts
 # Logs
 logs
 *.log
-npm-debug.log*
-pnpm-debug.log*
+
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
@@ -28,10 +27,4 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
 
