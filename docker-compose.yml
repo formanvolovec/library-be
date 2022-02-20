@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  db:
+    container_name: postgres-library
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=eugene
+      - POSTGRES_PASSWORD=gachimuchi
+      - POSTGRES_DB=library
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+
