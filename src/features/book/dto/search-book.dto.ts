@@ -1,8 +1,7 @@
 export class SearchBookDto {
   id: number;
   title: string;
-  authorFirstName: string;
-  authorLastName: string;
+  authorName: string;
   genre: string;
   date: number;
 }
