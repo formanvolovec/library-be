@@ -5,10 +5,13 @@ services:
     container_name: postgres-library
     image: postgres:14.1-alpine
     restart: always
+    ports:
+      - '5432:5432'
     environment:
       - POSTGRES_USER=eugene
       - POSTGRES_PASSWORD=gachimuchi
       - POSTGRES_DB=library
+      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - .:/var/lib/postgresql/data
 
