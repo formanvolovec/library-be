@@ -1,19 +1,18 @@
 import { IsEmail, Length } from 'class-validator';
-import { UniqueOnDatabase } from '../../auth/validations/UniqueValidation';
-import { UserEntity } from '../entities/user.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
+  @ApiProperty()
   @Length(2, 32, {
     message: 'Имя пользователя должно быть не менее 2 символов',
   })
   username: string;
 
+  @ApiProperty()
   @IsEmail(undefined, { message: 'Не правильная почта!' })
-  @UniqueOnDatabase(UserEntity, {
-    message: 'Такая почта уже есть',
-  })
   email: string;
 
+  @ApiProperty()
   @Length(6, 32, { message: 'Пароль должен быть не менее 6 символов' })
   password: string;
 }
