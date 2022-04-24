@@ -25,6 +25,9 @@ export class BookEntity {
   @Column('varchar')
   description: string;
 
+  @Column('bytea', { nullable: true })
+  picture: Uint8Array | string;
+
   @CreateDateColumn({ type: 'timestamp' })
   createAt: Date;
 }

@@ -2,8 +2,8 @@ import {
   ConflictException,
   HttpException,
   Injectable,
-  Logger,
-} from '@nestjs/common';
+  Logger, UnauthorizedException
+} from "@nestjs/common";
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/entities/user.entity';
@@ -32,11 +32,15 @@ export class AuthService {
   }
 
   login(user: UserEntity) {
-    const { password, ...userData } = user;
-    return {
-      ...userData,
-      token: this.generateJwtToken(userData),
-    };
+    try {
+      const { password, ...userData } = user;
+      return {
+        ...userData,
+        token: this.generateJwtToken(userData),
+      };
+    } catch (err) {
+      throw new UnauthorizedException('Wrong password or email');
+    }
   }
 
   async register(createUserDto: CreateUserDto) {

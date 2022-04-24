@@ -31,7 +31,7 @@ import {
 import { Role } from '../../shared/enums/role.enum';
 import { BookEntity } from './entities/book.entity';
 import { Roles } from '../../shared/decorators/role.decorator';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('book')
 @ApiTags('books')
@@ -46,12 +46,10 @@ export class BookController {
   @ApiBody({ type: CreateBookDto })
   @ApiCreatedResponse({ type: BookEntity })
   @ApiResponse({ status: 400, description: 'Bad Request' })
-  @Post()
-  @UseInterceptors(FileFieldsInterceptor([{ name: 'picture', maxCount: 1 }]))
-  create(@UploadedFiles() files, @Body() createBookDto: CreateBookDto) {
-    console.log(files);
-    const { picture } = files;
-    return this.bookService.create(createBookDto, picture[0]);
+  @Post('/add')
+  @UseInterceptors(FileInterceptor('picture'))
+  create(@UploadedFile() file, @Body() createBookDto: CreateBookDto) {
+    return this.bookService.create(createBookDto, file.buffer);
   }
 
   @ApiOperation({ summary: 'Search books by parameters' })

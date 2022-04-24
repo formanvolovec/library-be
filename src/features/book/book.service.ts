@@ -5,12 +5,11 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { Repository } from 'typeorm';
 import { BookEntity } from './entities/book.entity';
 import { SearchBookDto } from './dto/search-book.dto';
-import { FileService, FileType } from '../../shared/file/file.service';
+import { FileService } from '../../shared/file/file.service';
 
 @Injectable()
 export class BookService {
   private readonly logger = new Logger(BookService.name);
-
   constructor(
     @InjectRepository(BookEntity)
     private bookRepository: Repository<BookEntity>,
@@ -18,10 +17,12 @@ export class BookService {
   ) {}
 
   async create(createBookDto: CreateBookDto, picture) {
-    const book = await this.bookRepository.create(createBookDto);
-    const picturePath = this.fileService.createFile(FileType.IMAGE, picture);
+    const book = await this.bookRepository.create({
+      ...createBookDto,
+      picture,
+    });
     this.logger.log(`Book: ${book.title} successfully created`);
-    return this.bookRepository.save({ ...createBookDto, picture: picturePath });
+    return this.bookRepository.save(book);
   }
 
   findAll() {
@@ -57,18 +58,18 @@ export class BookService {
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
-    this.logger.log(`Updating book ${updateBookDto.title}`);
+    console.log(updateBookDto);
+    this.logger.log(`Updating book ${id}`);
     const find = await this.bookRepository.findOne(+id);
-
     if (!find) {
       this.logger.error(`No book found, to update`);
       throw new NotFoundException('No book found!');
     }
-    return this.bookRepository.update(id, updateBookDto);
+    return this.bookRepository.save({ ...updateBookDto, id });
   }
 
   async remove(id: number) {
-    this.logger.log(`Book ${id} has be deleted`);
+    this.logger.log(`Book ${id} delete`);
     const find = await this.bookRepository.findOne(+id);
 
     if (!find) {
