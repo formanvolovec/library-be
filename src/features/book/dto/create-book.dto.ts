@@ -1,23 +1,36 @@
-import { Length } from 'class-validator';
+import { IsInt, IsNumber, IsString, Length } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Type } from "class-transformer";
 
 export class CreateBookDto {
+  @ApiProperty()
+  @IsString()
   @Length(2, 150, {
-    message: 'Название книги должно быть не менее 2 символов',
+    message: 'Book title must be at least 2 characters',
   })
   title: string;
 
+  @ApiProperty()
+  @IsString()
   @Length(2, 65, {
-    message: ' Имя должно быть не менее 2 символов',
+    message: 'Name must be at least 2 characters',
   })
   authorName: string;
 
+  @ApiProperty()
+  @IsString()
   @Length(2, 32, {
-    message: 'Жанр должнен быть не менее 2 символов',
+    message: 'Genre must be at least 2 characters',
   })
   genre: string;
 
+  @ApiProperty()
+  @IsInt()
+  @Type(() => Number)
   date: number;
 
-  @Length(10, 2000, { message: 'Описание должно быть не менее 10 символов' })
+  @ApiProperty()
+  @IsString()
+  @Length(10, 2000, { message: 'Description must be at least 10 characters' })
   description: string;
 }

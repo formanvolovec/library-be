@@ -1,8 +1,5 @@
 # compiled output
-/dist
 /node_modules
-docker-compose.yml
-/src/shared/config/index.ts
 # Logs
 logs
 *.log
@@ -27,4 +24,5 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
-
+/pgdata/*
+/dist

@@ -1,8 +1,16 @@
+import { IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+
 export class SearchBookDto {
-  id: number;
+  @IsOptional()
+  @IsString()
   title: string;
-  authorFirstName: string;
-  authorLastName: string;
-  genre: string;
-  date: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  limit: number;
+
+  @IsNumber()
+  @Type(() => Number)
+  offset: number;
 }
