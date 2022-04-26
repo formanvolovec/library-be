@@ -5,11 +5,12 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { Repository } from 'typeorm';
 import { BookEntity } from './entities/book.entity';
 import { SearchBookDto } from './dto/search-book.dto';
-import { FileService } from '../../shared/file/file.service';
+import { FileService } from '../file/file.service';
 
 @Injectable()
 export class BookService {
   private readonly logger = new Logger(BookService.name);
+
   constructor(
     @InjectRepository(BookEntity)
     private bookRepository: Repository<BookEntity>,
@@ -58,8 +59,7 @@ export class BookService {
   }
 
   async update(id: number, updateBookDto: UpdateBookDto) {
-    console.log(updateBookDto);
-    this.logger.log(`Updating book ${id}`);
+    this.logger.log(`Updating book ${updateBookDto.title}`);
     const find = await this.bookRepository.findOne(+id);
     if (!find) {
       this.logger.error(`No book found, to update`);

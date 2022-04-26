@@ -1,20 +1,18 @@
 import {
   ConflictException,
-  HttpException,
   Injectable,
-  Logger, UnauthorizedException
-} from "@nestjs/common";
+  Logger,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/entities/user.entity';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { CryptoService } from '../../shared/crypto/crypto.service';
-import { ExceptionHandler } from '@nestjs/core/errors/exception-handler';
-import { validate } from 'class-validator';
 
 @Injectable()
 export class AuthService {
-  private readonly logger = new Logger(AuthService.name); //логгирование
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
@@ -46,7 +44,7 @@ export class AuthService {
   async register(createUserDto: CreateUserDto) {
     try {
       const user = await this.userService.create(createUserDto);
-      this.logger.log(`User: ${user.email} successfully created`); //логгирование
+      this.logger.log(`User: ${user.email} successfully created`);
       return this.login(user);
     } catch (err) {
       this.logger.error(`User  ${createUserDto.email} already exist`, err);

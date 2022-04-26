@@ -31,7 +31,7 @@ import {
 import { Role } from '../../shared/enums/role.enum';
 import { BookEntity } from './entities/book.entity';
 import { Roles } from '../../shared/decorators/role.decorator';
-import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('book')
 @ApiTags('books')

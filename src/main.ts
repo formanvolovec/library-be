@@ -1,14 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
-    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
-  });
-  app.useGlobalPipes(new ValidationPipe());
-  app.enableCors();
+function swaggerSetup(app: INestApplication) {
   const config = new DocumentBuilder()
     .setTitle('Library Doc')
     .setDescription('The Library info')
@@ -17,6 +12,15 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
+}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+  });
+  app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
+  swaggerSetup(app);
   await app.listen(3000);
 }
 bootstrap();

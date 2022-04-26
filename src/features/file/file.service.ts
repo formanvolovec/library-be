@@ -2,10 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as uuid from 'uuid';
-
-export enum FileType {
-  IMAGE = 'image',
-}
+import { FileType } from '../../shared/enums/fileType.enum';
 
 @Injectable()
 export class FileService {
